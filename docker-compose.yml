@@ -1,0 +1,21 @@
+# Main composition file for DHCP service
+# Author: Arthur Cadore M. Barcella
+# Github: arthurcadore
+
+version: '3.8'
+services:
+  # DHCP server service:
+  dhcpserver:
+    container_name: dhcpserver
+    hostname: dhcpserver
+    restart: always
+    network_mode: "host"
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - "./config/dhcpd.conf:/etc/dhcp/dhcpd.conf"
+      - "./config/dhcpd6.conf:/etc/dhcp/dhcpd6.conf"
+    # Map container build context to DHCPserver container:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
